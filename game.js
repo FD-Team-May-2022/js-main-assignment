@@ -15,6 +15,7 @@ function computerPlay() {
 function playRound(playerSelection, computerSelection) {
     let scoPlayer = 0;
     let scoComputer = 0;
+    let round=true;
     if (playerSelection.toLowerCase() == 'rock') {
         const expr = computerSelection;
         switch (expr) {
@@ -64,10 +65,14 @@ function playRound(playerSelection, computerSelection) {
                 console.log('Draw!');
                 break;
             default:
-            console.log(`Sorry, there is something wrong.`);
+                round=false;
+                console.log(`Sorry, there is something wrong.`);
         }
-    } else {console.log(`Sorry, there is something wrong.`);}
-    return [scoPlayer, scoComputer]
+    } else {
+        round=false;
+        console.log(`Sorry, there is something wrong.`);
+    }
+    return [scoPlayer, scoComputer, round]
 }
 
 // const playerSelection = 'Rock'
@@ -82,8 +87,14 @@ for (let i = 0; i<5; i++) {
     console.log("\nRound " + i)
     let computerSelection = computerPlay()
     let res = playRound(playerSelection, computerSelection)
-    scorePlayer += res[0]
-    scoreComputer += res[1]
+    let round = res[2]
+    if (round) {
+        scorePlayer += res[0]
+        scoreComputer += res[1]
+    } else {
+        i--
+        console.log("Please start this round again.")
+    }
 
     console.log("Player has " + scorePlayer + " points ; Computer has " + scoreComputer + " points.\n")
 }
